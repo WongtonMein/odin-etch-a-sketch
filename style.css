@@ -1,0 +1,14 @@
+h1 {
+    text-align: center;
+}
+
+#container {
+    display: flex;
+    justify-content: center;
+    flex-shrink: 1;
+}
+
+/* .square {
+    display: flex;
+    flex: 1;
+} */
