@@ -5,10 +5,9 @@ h1 {
 #container {
     display: flex;
     justify-content: center;
-    flex-shrink: 1;
+    flex-wrap: wrap;
 }
 
-/* .square {
-    display: flex;
-    flex: 1;
+/* #container > div:nth-child(16n + 1) {
+    width: 100% !important;
 } */
