@@ -1,5 +1,8 @@
 body {
     background-color: azure;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 h1 {
@@ -33,4 +36,16 @@ button {
     background-color: white;
     border: 100px;
     border-color: black;
+}
+
+#gradient {
+    text-decoration: line-through;
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+    color: black;
+    text-decoration: none;
 }
