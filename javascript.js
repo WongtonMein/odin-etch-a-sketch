@@ -1,26 +1,16 @@
 let mainGrid = document.getElementById("container");
 let currentMode = "classic"
-let gridLength = setGridLength()
+const defaultGridLength = 10;
+const viewportWidth = window.innerWidth;
+const viewportHeight = window.innerHeight;
+let gridLength
+let cellSize
 
-function setGridLength() {
-    let gridLength = parseInt(prompt("How many squares do you want per side? (max 100)"))
-    if (gridLength >= 1 && gridLength <= 100) {
-        return gridLength
-    } else {
-        alert("Invalid number of squares")
-    } 
-};
-
-function setCellSize() {
-    let viewportWidth = window.innerWidth; // functional
-    let viewportHeight = window.innerHeight; // functional
-    console.log(gridLength)
-    if (viewportWidth <= viewportHeight) {
-        return parseInt((viewportWidth - 200) / gridLength)
-    } else {
-        return parseInt((viewportHeight - 200) / gridLength)
-    };
-};
+let bttnDrawGrid = document.getElementById("create-grid");
+let bttnClassic = document.getElementById("classic");
+let bttnRGB = document.getElementById("rgb");
+let bttnGradient = document.getElementById("gradient");
+let bttnReset = document.getElementById("reset");
 
 function setMode(mode) {
     switch(mode) {
@@ -36,26 +26,43 @@ function setMode(mode) {
     }
 };
 
-// function drawGrid() {
-//     cellSize = setCellSize()
+function setGridLength() {
+    let gridLength = defaultGridLength
+    do {
+        let input = prompt("How many squares do you want per side? (max 100)")
+        gridLength = parseInt(input)
+    } while (gridLength < 1 || gridLength > 100 || isNaN(gridLength));
+    return gridLength
+};
 
-//     for (let i = 1; i < gridLength**2 + 1; i++) {
-//         const cell = document.createElement("div");
-//         cell.style.border = "1px solid black";
-//         cell.style.width = cellSize + "px";
-//         cell.style.height = cellSize + "px";
-//         mainGrid.appendChild(cell);
-//     }
-// };
+function setCellSize() {
+    if (viewportWidth <= viewportHeight) {
+        return parseInt((viewportWidth - 200) / gridLength)
+    } else {
+        return parseInt((viewportHeight - 200) / gridLength)
+    };
+};
 
-// old drawGrid() and highlightCells() functions
+function drawContainer() {
+    let mainGridLength
+    if (viewportWidth <= viewportHeight) {
+        mainGridLength = parseInt(viewportWidth - 200)
+    } else {
+        mainGridLength = parseInt(viewportHeight - 200)
+    }
+    mainGrid.style.width = mainGridLength + "px";
+    mainGrid.style.height = mainGridLength + "px";
+    mainGrid.style.border = "1px solid black";
+}
+
 function drawGrid(gridLength, cellSize) {
+    mainGrid.replaceChildren()
     for (i = 0; i < gridLength; i++) {
         let column = document.createElement("div");
         for (j = 0; j < gridLength; j++) {
             let cell = document.createElement("div");
             cell.classList.add("cell");
-            cell.style.border = "1px solid grey";
+            // cell.style.border = "0.5px solid grey";
             cell.style.width = cellSize + "px";
             cell.style.height = cellSize + "px";
             column.appendChild(cell);
@@ -73,14 +80,17 @@ function drawGrid(gridLength, cellSize) {
 //     })
 // };
 
-function main() {
-    let cellSize = setCellSize();
-    drawGrid(gridLength, cellSize); // functional
-    // highlightCell();
-    
-}
 
-main()
+// add function to set and draw container first
+drawContainer()
+bttnDrawGrid.addEventListener("click", () => {
+    gridLength = setGridLength();
+    cellSize = setCellSize();
+    drawGrid(gridLength, cellSize);
+}); // functional
+// highlightCell();
+    
+
 
 // dynamically resizes grid based on window size
 // need to implement keep grid background color

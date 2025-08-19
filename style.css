@@ -1,13 +1,36 @@
+body {
+    background-color: azure;
+}
+
 h1 {
     text-align: center;
+    margin: 20px;
+}
+
+.game {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    gap: 30px;
+    margin: 20px;
+}
+
+button {
+    width: 150px;
+    height: 30px;
+    background-color: white;
 }
 
 #container {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
+    background-color: white;
+    border: 100px;
+    border-color: black;
 }
-
-/* #container > div:nth-child(16n + 1) {
-    width: 100% !important;
-} */
