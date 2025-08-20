@@ -1,6 +1,7 @@
 // window dims
 const viewportWidth = window.innerWidth;
 const viewportHeight = window.innerHeight;
+let gridContainer = document.getElementById("container");
 let gridLength
 let cellSize
 
@@ -12,31 +13,30 @@ let bttnGradient = document.getElementById("gradient");
 let bttnReset = document.getElementById("reset");
 
 // default settings
-let gridContainer = document.getElementById("container");
 let currentMode = "black"
 const defaultGridLength = 10;
-bttnClassic.style.background = "gainsboro";
+const selectedModeButtonColor = "gainsboro"
+bttnClassic.style.background = selectedModeButtonColor;
 const opacityIncrease = 0.1
 
 // change cell draw color
 bttnClassic.addEventListener("click", () => {
     currentMode = "black";
-    bttnClassic.style.background = "gainsboro";
+    bttnClassic.style.background = selectedModeButtonColor;
     bttnRGB.style.background = "white";
     bttnGradient.style.background = "white";
     console.log(currentMode);});
 bttnRGB.addEventListener("click", () => {
     currentMode = "rgb";
     bttnClassic.style.background = "white";
-    bttnRGB.style.background = "gainsboro";
+    bttnRGB.style.background = selectedModeButtonColor;
     bttnGradient.style.background = "white";
     console.log(currentMode);}); 
 bttnGradient.addEventListener("click", () => {
-    // implement gradient function
     currentMode = "gradient";
     bttnClassic.style.background = "white";
     bttnRGB.style.background = "white";
-    bttnGradient.style.background = "gainsboro";
+    bttnGradient.style.background = selectedModeButtonColor;
     console.log(currentMode);}); 
 
 function setGridLength() {
@@ -86,9 +86,9 @@ function drawGrid(gridLength, cellSize) {
                     cell.style.backgroundColor = "black";
                 } else if (currentMode === "rgb") {
                     cell.style.backgroundColor = generateRandomColor();
-                // } else if (currentMode === "gradient") {
-                    // cell.style.backgroundColor = increaseCellOpacity(cell);
-                }
+                } else if (currentMode === "gradient") {
+                    drawBlackGradient(cell);
+                };
 
             // reset
             bttnReset.addEventListener("click", () => {
@@ -110,13 +110,12 @@ function generateRandomColor() {
     return `rgb(${red}, ${green}, ${blue})`
 };
 
-function increaseCellOpacity(cell) {
-    let currentOpacity = parseFloat(window.getComputedStyle(cell).opacity);
-    let newOpacity = Math.min(currentOpacity + opacityIncrease, 1.0);
-    
-    cell.setAttribute("style", `background-color: rgb(255, 255, 255, ${newOpacity}`)
+function drawBlackGradient(cell) {
+    let opacity = Number(cell.style.opacity);
+    opacity += opacityIncrease;
+    cell.style.opacity = `${opacity}`;
+    cell.style.backgroundColor = "black";
 };
-
 
 drawContainer(); // functional
 bttnDrawGrid.addEventListener("click", () => { // functional
@@ -127,12 +126,9 @@ bttnDrawGrid.addEventListener("click", () => { // functional
 
 // dynamically resizes grid based on window size
 // need to implement keep grid background color
-    // function redrawGrid() {
-    //     gridContainer.replaceChildren();
-    //     drawGrid()
-    // };
-    // window.addEventListener("resize", redrawGrid);
+// function redrawGrid() {
+    // gridContainer.replaceChildren();
+    // drawGrid()
+// };
 
-// square.addEventListener("mouseover", () => {
-//     let 
-// })
+// window.addEventListener("resize", redrawGrid);
